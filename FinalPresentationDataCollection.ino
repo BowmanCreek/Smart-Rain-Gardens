@@ -1,14 +1,9 @@
 //This code records the percent moisture from 11 moisture sensors and
 //saves them to an SD card, along with the date and time of the reading.
-
-
-#include <DS3231.h>
 #include <avr/sleep.h>
 #include <Wire.h>
 #include <SPI.h>
 #include <SD.h>
-
-DS3231 rtc(SDA,SCL);
 
 
 //The data log file
@@ -85,13 +80,12 @@ void setup() {
   pinMode(wakePin, INPUT_PULLUP);
   attachInterrupt(2, wakeUpNow, CHANGE); //interrupt 0 is attached to digital pin 2
   setupLogFile();
-  rtc.begin();
   sleepNow();
   Wire.begin();
 
-  rtc.setDate(29, 07, 2016); //set date and time
-  rtc.setTime(11, 43, 00);
-
+ //set date and time here
+ 
+ 
   raingauge = 0.01; //when system wakes up, 0.01" of rain have fallen
 }
 
@@ -116,7 +110,7 @@ String createDataRecord()
   //Create a String type data record in csv format
   //SampleTime, Moisture
   String data = "Time: ";
-  data += rtc.getUnixTime(rtc.getTime());
+  data += millis();
   data += ", Moistures: ";
   
   for (analogNum = 0; analogNum <= 7; analogNum++){
@@ -162,8 +156,7 @@ void loop() {
 
   lastData = change; //helping debounce the tipping bucket
 
-  UnixTime = rtc.getUnixTime(rtc.getTime());  //read Unix time
-  intTime = (int)UnixTime;
+  intTime = millis();
   if (intTime%5 == 0 && (mostRecentTime != intTime))  //do this every 5 seconds for 30 minutes
   {
      String dataRec = createDataRecord();  //collect data into a string
