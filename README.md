@@ -16,4 +16,4 @@ Programs included:
 Sample Time:  Shows an example of how to use the function "millis" to record data at certain time intervals.
 
 
-Note: The main code for data monitoring still contains use of external UNIXTIME libraries.  Those should be transitioned to using the function millis(), and that library is not needed.  As of now, there is now official timestamp, so that must be recorded at the start and end of executing the program, and used to interpret dat based on intervals.
+Note: The main code for data monitoring still contains use of external UNIXTIME libraries for the program GardenSDNOXbee.ino.  Those should be transitioned to using the function millis() similar to how FInalPresentationDataCollection.ino looks.  The external UNIXtime libraries are not needed.  As of now, there is no official timestamp, so that must be recorded at the start and end of executing the program, and used to interpret data based on intervals.
